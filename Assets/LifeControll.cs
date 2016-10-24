@@ -7,7 +7,7 @@ public class LifeControll : MonoBehaviour {
     public float playerLife = 100;
     public float playerShotForce = 20;
 
-    private LifeControll enemy;
+    public LifeControll enemy;
     private Text textPlayerLife;
     private Slider sliderPlayer;
     private Color startColorPlayer;
@@ -27,15 +27,16 @@ public class LifeControll : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && other.gameObject != this.gameObject)
         {
             enemy = other.gameObject.GetComponent<LifeControll>();
         }
     }
 
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == enemy)
+        if (other.gameObject == enemy.gameObject)
         {
             enemy = null;
         }

@@ -5,41 +5,55 @@ using System;
 
 public class PlayerControll : MonoBehaviour
 {
-    public float speed = 3f;
+    private float speed = 150f;
+    private float rotateSpeed = 3f;
+
     private CharacterController controller;
     private Animator animator;
     private Vector2 startPos;
     private Vector2 direction;
    
-    private float rotateSpeed = 3f;
     private float speedRotation = 2f;
     private float maxLength = 4f;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        //#if UNITY_EDITOR
-        //transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
-        //Vector3 forward = transform.TransformDirection(Vector3.forward);
-        //float curSpeed = speed * Input.GetAxis("Vertical");
-        //controller.SimpleMove(forward * curSpeed);
-        //#elif UNITY_ANDROID
+#if UNITY_STANDALONE
+        InputKeyCatch();
+#elif UNITY_ANDROID
         TouchCatch();
-        //#endif
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("Mouse down");
-        //    Shot();
-        //}
+#endif
     }
 
-   private void TouchCatch()
+    private void InputKeyCatch()
+    {
+        float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        float y = Input.GetAxis("Vertical") * Time.deltaTime * rotateSpeed;
+
+        transform.Rotate(0, x, 0);
+        transform.Translate(0, 0, y);
+            
+        if (Input.GetAxis("Vertical") != 0)
+        {
+            animator.SetBool("IsRun", true);
+        }
+        else
+        {
+            animator.SetBool("IsRun", false);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Shot();
+        }
+    }
+
+    private void TouchCatch()
     {
         // Track a single touch as a direction control.
         if (Input.touchCount > 0)

@@ -5,7 +5,7 @@ using System;
 
 public class PlayerControll : MonoBehaviour
 {
-    private float speed = 150f;
+    private float speed = 3f;
     private float rotateSpeed = 3f;
 
     private CharacterController controller;
@@ -19,6 +19,8 @@ public class PlayerControll : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        transform.SetParent(FindObjectOfType<MeshCollider>().transform);
     }
 
     void Update()

@@ -28,7 +28,7 @@ public class PlayerControll : MonoBehaviour
 #if UNITY_STANDALONE
         InputKeyCatch();
 #elif UNITY_ANDROID
-        TouchCatch();
+//        TouchCatch();
         InputKeyCatch();
 #endif
     }

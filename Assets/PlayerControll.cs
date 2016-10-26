@@ -6,7 +6,7 @@ using System;
 public class PlayerControll : MonoBehaviour
 {
     private float speed = 3f;
-    private float rotateSpeed = 3f;
+    private float rotateSpeed = 150f;
 
     private CharacterController controller;
     private Animator animator;
@@ -29,13 +29,14 @@ public class PlayerControll : MonoBehaviour
         InputKeyCatch();
 #elif UNITY_ANDROID
         TouchCatch();
+        InputKeyCatch();
 #endif
     }
 
     private void InputKeyCatch()
     {
-        float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        float y = Input.GetAxis("Vertical") * Time.deltaTime * rotateSpeed;
+        float x = Input.GetAxis("Horizontal") * Time.deltaTime * rotateSpeed;
+        float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
         transform.Rotate(0, x, 0);
         transform.Translate(0, 0, y);
@@ -72,7 +73,7 @@ public class PlayerControll : MonoBehaviour
 
                 // Determine direction by comparing the current touch position with the initial one.
                 case TouchPhase.Moved:
-                    direction = startPos - touch.position;
+                    direction = touch.position - startPos;
                     break;
 
                 // Report that a direction has been chosen when the finger is lifted.
